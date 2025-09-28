@@ -75,32 +75,21 @@ async function handleSubscriptionRequest(request, uuid) {
         nodynamic: url.searchParams.get('nodynamic') === '1'
     };
 
-    // 如果没有任何筛选条件，使用原有逻辑
-    if (filters.domains.length === 0 && filters.isps.length === 0 && filters.ports.length === 0 && !filters.nodynamic) {
-        const nativeList = [{ ip: workerDomain, isp: '原生地址' }];
-        finalLinks.push(...generateLinksFromSource(nativeList, uuid, workerDomain));
+    // 始终添加原生地址
+    const nativeList = [{ ip: workerDomain, isp: '原生地址' }];
+    finalLinks.push(...generateLinksFromSource(nativeList, uuid, workerDomain, filters));
 
-        const domainList = directDomains.map(d => ({ ip: d.domain, isp: d.name || d.domain }));
-        finalLinks.push(...generateLinksFromSource(domainList, uuid, workerDomain));
-
-        const dynamicIPList = await fetchDynamicIPs();
-        if (dynamicIPList.length > 0) {
-            finalLinks.push(...generateLinksFromSource(dynamicIPList, uuid, workerDomain));
-        }
-    } else {
-        // 应用筛选逻辑
-        const nativeList = [{ ip: workerDomain, isp: '原生地址' }];
-        finalLinks.push(...generateLinksFromSource(nativeList, uuid, workerDomain, filters));
-
+    // 只有在选择了域名时才添加固定域名节点
+    if (filters.domains.length > 0) {
         const domainList = directDomains.map(d => ({ ip: d.domain, isp: d.name || d.domain }));
         finalLinks.push(...generateLinksFromSource(domainList, uuid, workerDomain, filters));
+    }
 
-        // 只有在未禁用动态IP时才获取
-        if (!filters.nodynamic) {
-            const dynamicIPList = await fetchDynamicIPs();
-            if (dynamicIPList.length > 0) {
-                finalLinks.push(...generateLinksFromSource(dynamicIPList, uuid, workerDomain, filters));
-            }
+    // 只有在未禁用动态IP时才获取
+    if (!filters.nodynamic) {
+        const dynamicIPList = await fetchDynamicIPs();
+        if (dynamicIPList.length > 0) {
+            finalLinks.push(...generateLinksFromSource(dynamicIPList, uuid, workerDomain, filters));
         }
     }
 
