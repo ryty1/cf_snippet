@@ -2,7 +2,7 @@ import { connect } from 'cloudflare:sockets';
 
 // --- 硬编码配置 ---
 // UUID，同时用作订阅路径。
-const authToken = 'f4b1235c-73aa-4bc3-b654-b4daeabbe3da';
+const authToken = '8442017a-60c6-4861-97e4-cf2eae8e5ce1';
 // 用来访问cloudflare托管的网站
 const fallbackAddress = 'ProxyIP.cmliussss.net';
 const fallbackPort = '443';
@@ -10,12 +10,9 @@ const fallbackPort = '443';
 const socks5Config = '';
 
 const directDomains = [
-    { name: "cloudflare.182682.xyz", domain: "cloudflare.182682.xyz" }, { name: "speed.marisalnc.com", domain: "speed.marisalnc.com" },
-    { domain: "freeyx.cloudflare88.eu.org" }, { domain: "bestcf.top" }, { domain: "cdn.2020111.xyz" }, { domain: "cfip.cfcdn.vip" },
-    { domain: "cf.0sm.com" }, { domain: "cf.090227.xyz" }, { domain: "cf.zhetengsha.eu.org" }, { domain: "cloudflare.9jy.cc" },
-    { domain: "cf.zerone-cdn.pp.ua" }, { domain: "cfip.1323123.xyz" }, { domain: "cnamefuckxxs.yuchen.icu" }, { domain: "cloudflare-ip.mofashi.ltd" },
-    { domain: "115155.xyz" }, { domain: "cname.xirancdn.us" }, { domain: "f3058171cad.002404.xyz" }, { domain: "8.889288.xyz" },
-    { domain: "cdn.tzpro.xyz" }, { domain: "cf.877771.xyz" }, { domain: "xn--b6gac.eu.org" }
+    { domain: "cf.090227.xyz" },
+    { domain: "cf.877771.xyz" }, 
+    { domain: "cf.serokvip.dpdns.org" }
 ];
 
 const parsedSocks5Config = {};
