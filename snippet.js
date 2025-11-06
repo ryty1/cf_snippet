@@ -11,7 +11,8 @@ const fallbackPort = '443';
  const parsedSocks5Config = {};
  const isSocksEnabled = false;
 
-/* 启用SOCK5，格式: user:pass@host:port
+// 启用SOCK5，格式: user:pass@host:port
+/*
 const socks5Config = 'user:pass@host:port';
 // 解析 SOCKS5 配置
 let parsedSocks5Config = {};
