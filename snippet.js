@@ -31,8 +31,7 @@ if (socks5Config && socks5Config.trim()) {
 
 const directDomains = [
     { domain: "cf.090227.xyz" },
-    { domain: "cf.877771.xyz" }, 
-    { domain: "cf.serokvip.dpdns.org" }
+    { domain: "cf.877771.xyz" }
 ];
 
 const E_INVALID_DATA = atob('aW52YWxpZCBkYXRh');
