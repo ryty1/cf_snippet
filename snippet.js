@@ -6,12 +6,14 @@ const authToken = '8442017a-60c6-4861-97e4-cf2eae8e5ce1';
 // 用来访问cloudflare托管的网站
 const fallbackAddress = 'ProxyIP.cmliussss.net';
 const fallbackPort = '443';
+
 // SOCKS5 禁用。
  const socks5Config = '';
  const parsedSocks5Config = {};
  const isSocksEnabled = false;
 
 // 启用SOCK5，格式: user:pass@host:port
+
 /*
 const socks5Config = 'user:pass@host:port';
 // 解析 SOCKS5 配置
