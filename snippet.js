@@ -6,17 +6,34 @@ const authToken = '8442017a-60c6-4861-97e4-cf2eae8e5ce1';
 // 用来访问cloudflare托管的网站
 const fallbackAddress = 'ProxyIP.cmliussss.net';
 const fallbackPort = '443';
-// SOCKS5 代理配置。留空则禁用。格式: user:pass@host:port
-const socks5Config = '';
+// SOCKS5 禁用。
+ const socks5Config = '';
+ const parsedSocks5Config = {};
+ const isSocksEnabled = false;
+
+/* 启用SOCK5，格式: user:pass@host:port
+const socks5Config = 'user:pass@host:port';
+// 解析 SOCKS5 配置
+let parsedSocks5Config = {};
+let isSocksEnabled = false;
+
+if (socks5Config && socks5Config.trim()) {
+    try {
+        parsedSocks5Config = parseSocksConfig(socks5Config);
+        isSocksEnabled = true;
+        console.log('SOCKS5 proxy enabled:', parsedSocks5Config.hostname);
+    } catch (error) {
+        console.error('Failed to parse SOCKS5 config:', error.message);
+        isSocksEnabled = false;
+    }
+}
+*/
 
 const directDomains = [
     { domain: "cf.090227.xyz" },
     { domain: "cf.877771.xyz" }, 
     { domain: "cf.serokvip.dpdns.org" }
 ];
-
-const parsedSocks5Config = {};
-const isSocksEnabled = false;
 
 const E_INVALID_DATA = atob('aW52YWxpZCBkYXRh');
 const E_INVALID_USER = atob('aW52YWxpZCB1c2Vy');
