@@ -16,3 +16,7 @@ const SC = [];
 - [ ] 配置 `DD` 数组，按格式添加您的优选域名
 - [ ] （可选）修改 `FA` 和 `FP` 回退地址
 - [ ] 面板地址：`https://域名`
+
+<img width="1004" height="651" alt="image" src="https://github.com/user-attachments/assets/a8abdda9-7bdd-4184-bf71-2cd4b39e665a" />
+
+<img width="1456" height="756" alt="image" src="https://github.com/user-attachments/assets/38edb9e0-bca9-49c6-b283-5345a1946ffc" />
