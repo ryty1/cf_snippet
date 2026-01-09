@@ -38,7 +38,7 @@ function gLFD(dl, u, w, f = {}) {
             const { region: rg } = s; ps.forEach(p => {
                 const n = `Sinppets-Socks-${rg}-${it.domain}-${p}`, ws = encodeURIComponent(`/?ed=2048&socks=${si}`),
                     pm = new URLSearchParams({ encryption: 'none', security: p === 443 ? 'tls' : 'none', type: 'ws', host: w, path: ws });
-                if (p === 443) { pm.append('sni', w); pm.append('fp', 'randomized') }
+                if (p === 443) { pm.append('sni', w); pm.append('fp', 'firefox') }
                 L.push(`${pr}://${u}@${it.domain}:${p}?${pm}#${encodeURIComponent(n)}`)
             })
         });
@@ -49,7 +49,7 @@ function gLFD(dl, u, w, f = {}) {
                 // This makes the ENTRY path different for each node.
                 const n = `Sinppets-ProxyIP-${rg}-${it.domain}-${p}`, ws = encodeURIComponent(`/?ed=2048&proxyip=${pxi}`),
                     pm = new URLSearchParams({ encryption: 'none', security: p === 443 ? 'tls' : 'none', type: 'ws', host: w, path: ws });
-                if (p === 443) { pm.append('sni', w); pm.append('fp', 'randomized') }
+                if (p === 443) { pm.append('sni', w); pm.append('fp', 'firefox') }
                 L.push(`${pr}://${u}@${ip}:${p}?${pm}#${encodeURIComponent(n)}`)
             })
         })
