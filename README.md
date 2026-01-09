@@ -6,8 +6,8 @@
 ```bash
 // socks5 格式，可按格式添加：
 const SC = [
-    { region: '新加坡', config: 'abcd:123456@123.234.45.67:22222' },
-    { region: '香港', config: 'abcd:123456@123.234.45.67:22222' }
+    { region: '新加坡', config: 'user:password@ip:port' },
+    { region: '香  港', config: 'user:password@ip:port' }
 ];
 
 // 不启用socks5 ：
