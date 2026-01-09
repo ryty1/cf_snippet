@@ -1,5 +1,5 @@
 import { connect } from 'cloudflare:sockets';
-const T = '8442017a-60c6-4861-97e4-cf2eae8e5ce1', FA = 'ProxyIP.cmliussss.net', FP = '443', PW = '登录密码',
+const T = '05afc6ab-d912-4c55-982d-ad03cde92be7', FA = 'ProxyIP.cmliussss.net', FP = '443', PW = '登录密码',
     SC = [{ region: '地区名1', config: 'user:password@ip:port' }, { region: '地区名2', config: 'user:password@ip:port' }],
     PI = [{ region: '香港', ip: '103.219.194.43' }, { region: '新加坡', ip: '139.180.159.133' }, { region: '日本', ip: '141.147.147.180' }, { region: '韩国', ip: '123.111.169.70' }, { region: '美国', ip: '104.131.168.146' }, { region: '加拿大', ip: '149.248.56.22' }, { region: '英国', ip: '192.236.193.108' }, { region: '德国', ip: '158.101.183.27' }, { region: '荷兰', ip: '103.137.249.117' }, { region: '芬兰', ip: '109.206.236.23' }, { region: '瑞典', ip: '62.182.192.226' }],
     DD = [{ domain: "cf.090227.xyz" }, { domain: "freeyx.cloudflare88.eu.org" }, { domain: "cf.877774.xyz" }];
