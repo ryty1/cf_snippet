@@ -18,10 +18,10 @@ const socks5Configs = [
 
 // 域名列表
 const directDomains = [
-    { domain: "cf.sk8.de5.net" },
     { domain: "cf.090227.xyz" },
     { domain: "freeyx.cloudflare88.eu.org" },
     { domain: "cf.877774.xyz" }
+    // 可以继续添加更多SOCKS配置
 ];
 
 const E_INVALID_DATA = atob('aW52YWxpZCBkYXRh');
