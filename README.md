@@ -82,6 +82,14 @@ https://您的域名
 4. **Scopes** (权限): ⚠️ **必须勾选 `repo`** (Full control of private repositories)
 5. 点击页面底部 **Generate token**
 6. **复制生成的以 `ghp_` 开头的字符串** (关掉页面就看不到了！)
+7. 配置脚本
+      ```javascript
+   const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
+   const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+   ```
+> 【注意】config.json 原始 Raw 链接 (去掉 ?token=...)
+> 【注意】您的 GitHub Token (必须勾选 repo 权限)
+
 
 ### 3. 获取配置文件链接 (CU)
 
