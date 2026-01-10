@@ -67,8 +67,8 @@ https://您的域名
 
 ### 1. 创建 GitHub 私有仓库
 
-1. 登录 GitHub，点击右上角 **+** -> **New repository**
-2. Repository name 填入 `sinppets-config`（或任意名称）
+1. 登录 [GitHub](https://github.com/)，点击右上角 **+** -> **New repository**
+2. **Repository name** 填入 `sinppets-config`（或任意名称）
 3. **关键步骤**：勾选 **Private**（私有）
 4. 点击 **Create repository**
 
