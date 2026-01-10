@@ -14,8 +14,17 @@
    ```javascript
    const PW = 'abc123456';  // 默认
    ```
+3. **【可选】Github远程配置**
 
-3. **（可选）修改 FA 和 FP 回退地址**
+```javascript
+// 【必须】您的 config.json 原始 Raw 链接 (去掉 ?token=...)
+const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
+
+// 【必须】您的 GitHub Token (必须勾选 repo 权限)
+const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+```
+
+4. **（可选）修改 FA 和 FP 回退地址**
    ```javascript
    const FA = 'ProxyIP.cmliussss.net'; // 回退域名
    const FP = '443';                 // 回退端口
@@ -23,7 +32,7 @@
 
 ### 节点配置(可选Github配置，脚本保持默认，无Github配置可在脚本中按需配置)
 
-4. **配置 SC 数组，添加 SOCKS5 落地**
+5. **配置 SC 数组，添加 SOCKS5 落地**
    ```javascript
    // 启用 socks5 落地，可按格式添加：
    const SC = [
@@ -38,7 +47,7 @@
    const SC = [];
    ```
 
-5. **配置 DD 数组，按格式添加您的优选域名**
+6. **配置 DD 数组，按格式添加您的优选域名**
    ```javascript
    const DD = [
        { domain: "cf.sk8.de5.net" },
@@ -62,15 +71,6 @@ https://您的域名
 2. Repository name 填入 `sinppets-config`（或任意名称）
 3. **关键步骤**：勾选 **Private**（私有）
 4. 点击 **Create repository**
-5. 点击 **uploading an existing file** 上传您的 `config.json`
-```javascript
-// 您的 config.json 原始链接
-const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
-
-// 您的 GitHub Token (私有仓库必需，公开仓库可留空)
-// ⚠️ 私有仓库必填，且 Token 需勾选 'repo' 权限
-const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-```
 
 ### 2. 获取访问授权 (Token)
 
@@ -85,27 +85,8 @@ const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 ### 3. 获取配置文件链接 (CU)
 
-1. 在您的私有仓库中，新建编辑 `config.json` 文件
-2. 点击右上角的 **Raw** 按钮
-3. 复制浏览器地址栏中的链接
-   - 格式应为: `https://raw.githubusercontent.com/用户名/仓库名/main/config.json`
-   - 注意：如果链接包含 `?token=...`，请**去掉**问号及后面的所有内容，只保留 `.json` 结尾。
-
----
-
-### 4. 最终配置代码
-
-将以下代码替换 `sinpetts.js` 顶部的变量设置：
-
-```javascript
-// 【必须】您的 config.json 原始 Raw 链接 (去掉 ?token=...)
-const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
-
-// 【必须】您的 GitHub Token (必须勾选 repo 权限)
-const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-```
-
-### 2. config.json 格式示例
+1. 在您的私有仓库中，新建编辑 `config.json` 文件， config.json 格式示例
+   
 ```json
 {
   "socks": [
@@ -120,6 +101,12 @@ const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
   ]
 }
 ```
+2. 点击右上角的 **Raw** 按钮
+3. 复制浏览器地址栏中的链接
+   - 格式应为: `https://raw.githubusercontent.com/用户名/仓库名/main/config.json`
+   - 注意：如果链接包含 `?token=...`，请**去掉**问号及后面的所有内容，只保留 `.json` 结尾。
+
+---
 
 
 <img width="532" height="350" alt="image" src="https://github.com/user-attachments/assets/6447f9b4-d958-463e-b37b-fbd68387ac05" />
