@@ -3,15 +3,8 @@ const T = 'b879909d-afa7-455a-8cf1-58627a447c78';
 const FA = 'ProxyIP.cmliussss.net';
 const FP = '443';
 const PW = '你的登录密码';
-const SC = [
-    { region: '地区名称', config: 'user:pass@host:port' },
-    { region: '地区名称', config: 'user:pass@host:port' }
-];
-const DD = [
-    { domain: "cf.090227.xyz" },
-    { domain: "freeyx.cloudflare88.eu.org" },
-    { domain: "cf.877774.xyz" }
-];
+const SC = [{ region: '地区名称', config: 'user:pass@host:port' }, { region: '地区名称', config: 'user:pass@host:port' }];
+const DD = [{ domain: "cf.090227.xyz" }, { domain: "freeyx.cloudflare88.eu.org" }, { domain: "cf.877774.xyz" }];
 const E1 = atob('aW52YWxpZCBkYXRh');
 const E2 = atob('aW52YWxpZCB1c2Vy');
 const E3 = atob('Y29tbWFuZCBpcyBub3Qgc3VwcG9ydGVk');
