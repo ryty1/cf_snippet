@@ -1,24 +1,17 @@
 import { connect } from 'cloudflare:sockets';
-
-const T = '20fbbe24-da62-43b2-ba77-f0470751c853';
+const T = 'b879909d-afa7-455a-8cf1-58627a447c78';
 const FA = 'ProxyIP.cmliussss.net';
 const FP = '443';
-
 const PW = '你的登录密码';
-
 const SC = [
     { region: '地区名称', config: 'user:pass@host:port' },
     { region: '地区名称', config: 'user:pass@host:port' }
 ];
-
-
 const DD = [
     { domain: "cf.090227.xyz" },
     { domain: "freeyx.cloudflare88.eu.org" },
     { domain: "cf.877774.xyz" }
-
 ];
-
 const E1 = atob('aW52YWxpZCBkYXRh');
 const E2 = atob('aW52YWxpZCB1c2Vy');
 const E3 = atob('Y29tbWFuZCBpcyBub3Qgc3VwcG9ydGVk');
@@ -32,11 +25,9 @@ const EA = atob('bm8gYWNjZXB0YWJsZSBtZXRob2Rz');
 const EB = atob('c29ja3Mgc2VydmVyIG5lZWRzIGF1dGg=');
 const EC = atob('ZmFpbCB0byBhdXRoIHNvY2tzIHNlcnZlcg==');
 const ED = atob('ZmFpbCB0byBvcGVuIHNvY2tzIGNvbm5lY3Rpb24=');
-
 const A1 = 1;
 const A2 = 2;
 const A3 = 3;
-
 export default {
     async fetch(request, env, ctx) {
         try {
@@ -62,37 +53,25 @@ export default {
         }
     },
 };
-
 async function handleSubscriptionRequest(request, uuid) {
     const url = new URL(request.url);
     const finalLinks = [];
     const workerDomain = url.hostname;
-
-
     const filters = {
         domains: url.searchParams.get('domains')?.split(',') || [],
         ports: url.searchParams.get('ports')?.split(',') || []
     };
-
-
     const domainList = filters.domains.length > 0
         ? DD.filter(d => filters.domains.some(sel => d.domain.toLowerCase().includes(sel.toLowerCase())))
         : DD;
-
-
     finalLinks.push(...generateLinksFromDomains(domainList, uuid, workerDomain, filters));
-
-
     if (finalLinks.length === 0) {
         return new Response('No nodes available', { status: 404 });
     }
-
-
     const subscriptionText = finalLinks.join('\n');
     const encoder = new TextEncoder();
     const utf8Bytes = encoder.encode(subscriptionText);
     const subscriptionContent = btoa(String.fromCharCode(...utf8Bytes));
-
     return new Response(subscriptionContent, {
         headers: {
             'Content-Type': 'text/plain; charset=utf-8',
@@ -100,7 +79,6 @@ async function handleSubscriptionRequest(request, uuid) {
         },
     });
 }
-
 function generateLinksFromDomains(domainList, uuid, workerDomain, filters = {}) {
     const allPorts = [443, 80];
     const ports = filters.ports && filters.ports.length > 0
@@ -109,20 +87,14 @@ function generateLinksFromDomains(domainList, uuid, workerDomain, filters = {}) 
     const links = [];
     const wsPath = encodeURIComponent('/?ed=2048');
     const proto = 'vless';
-
     domainList.forEach(item => {
-
         if (SC.length > 0) {
             SC.forEach((socksConfig, socksIndex) => {
                 const { region } = socksConfig;
-
                 ports.forEach(port => {
                     const domainName = item.domain;
                     const nodeName = `Sinppets-${region}-${domainName}-${port}`;
-
-
                     const wsPathWithSocks = encodeURIComponent(`/?ed=2048&socks=${socksIndex}`);
-
                     const params = new URLSearchParams({
                         encryption: 'none',
                         security: port === 443 ? 'tls' : 'none',
@@ -130,21 +102,17 @@ function generateLinksFromDomains(domainList, uuid, workerDomain, filters = {}) 
                         host: workerDomain,
                         path: wsPathWithSocks
                     });
-
                     if (port === 443) {
                         params.append('sni', workerDomain);
                         params.append('fp', 'firefox');
                     }
-
                     links.push(`${proto}://${uuid}@${item.domain}:${port}?${params.toString()}#${encodeURIComponent(nodeName)}`);
                 });
             });
         } else {
-
             ports.forEach(port => {
                 const domainName = item.domain;
                 const nodeName = `Sinppets-${domainName}-${port}`;
-
                 const params = new URLSearchParams({
                     encryption: 'none',
                     security: port === 443 ? 'tls' : 'none',
@@ -152,29 +120,21 @@ function generateLinksFromDomains(domainList, uuid, workerDomain, filters = {}) 
                     host: workerDomain,
                     path: wsPath
                 });
-
                 if (port === 443) {
                     params.append('sni', workerDomain);
                     params.append('fp', 'firefox');
                 }
-
                 links.push(`${proto}://${uuid}@${item.domain}:${port}?${params.toString()}#${encodeURIComponent(nodeName)}`);
             });
         }
     });
-
     return links;
 }
-
 async function handleWsRequest(request) {
-
     const url = new URL(request.url);
     const socksIndex = parseInt(url.searchParams.get('socks') || '0');
-
-
     let parsedSocks5Config = {};
     let isSocksEnabled = false;
-
     if (SC.length > 0 && socksIndex >= 0 && socksIndex < SC.length) {
         try {
             parsedSocks5Config = parseSocksConfig(SC[socksIndex].config);
@@ -183,17 +143,13 @@ async function handleWsRequest(request) {
             console.error('Failed to parse SOCKS5 config:', error.message);
         }
     }
-
     const wsPair = new WebSocketPair();
     const [clientSock, serverSock] = Object.values(wsPair);
     serverSock.accept();
-
     let remoteConnWrapper = { socket: null };
     let isDnsQuery = false;
-
     const earlyData = request.headers.get('sec-websocket-protocol') || '';
     const readable = makeReadableStream(serverSock, earlyData);
-
     readable.pipeTo(new WritableStream({
         async write(chunk) {
             if (isDnsQuery) return await forwardUDP(chunk, serverSock, null);
@@ -205,23 +161,18 @@ async function handleWsRequest(request) {
             }
             const { hasError, message, addressType, port, hostname, rawIndex, version, isUDP } = parseWsPacketHeader(chunk, T);
             if (hasError) throw new Error(message);
-
             if (isUDP) {
                 if (port === 53) isDnsQuery = true;
                 else throw new Error(E4);
             }
             const respHeader = new Uint8Array([version[0], 0]);
             const rawData = chunk.slice(rawIndex);
-
             if (isDnsQuery) return forwardUDP(rawData, serverSock, respHeader);
-
             await forwardTCP(addressType, hostname, port, rawData, serverSock, respHeader, remoteConnWrapper, isSocksEnabled, parsedSocks5Config);
         },
     })).catch((err) => { console.log('WS Stream Error:', err); });
-
     return new Response(null, { status: 101, webSocket: clientSock });
 }
-
 async function forwardTCP(addrType, host, portNum, rawData, ws, respHeader, remoteConnWrapper, isSocksEnabled, parsedSocks5Config) {
     async function connectAndSend(address, port) {
         const remoteSock = isSocksEnabled ?
@@ -249,7 +200,6 @@ async function forwardTCP(addrType, host, portNum, rawData, ws, respHeader, remo
         retryConnection();
     }
 }
-
 function parseWsPacketHeader(chunk, token) {
     if (chunk.byteLength < 24) return { hasError: true, message: E1 };
     const version = new Uint8Array(chunk.slice(0, 1));
@@ -271,7 +221,6 @@ function parseWsPacketHeader(chunk, token) {
     if (!hostname) return { hasError: true, message: `${E6}: ${addressType}` };
     return { hasError: false, addressType, port, hostname, isUDP, rawIndex: addrValIdx + addrLen, version };
 }
-
 function makeReadableStream(socket, earlyDataHeader) {
     let cancelled = false;
     return new ReadableStream({
@@ -285,7 +234,6 @@ function makeReadableStream(socket, earlyDataHeader) {
         cancel() { cancelled = true; closeSocketQuietly(socket); }
     });
 }
-
 async function connectStreams(remoteSocket, webSocket, headerData, retryFunc) {
     let header = headerData, hasData = false;
     await remoteSocket.readable.pipeTo(
@@ -301,7 +249,6 @@ async function connectStreams(remoteSocket, webSocket, headerData, retryFunc) {
     ).catch((error) => { console.error("Stream connection error:", error); closeSocketQuietly(webSocket); });
     if (!hasData && retryFunc) retryFunc();
 }
-
 async function forwardUDP(udpChunk, webSocket, respHeader) {
     try {
         const tcpSocket = connect({ hostname: '8.8.4.4', port: 53 });
@@ -319,7 +266,6 @@ async function forwardUDP(udpChunk, webSocket, respHeader) {
         }));
     } catch (error) { console.error(`DNS forward error: ${error.message}`); }
 }
-
 async function establishSocksConnection(addrType, address, port, parsedSocks5Config) {
     const { username, password, hostname, socksPort } = parsedSocks5Config;
     const socket = connect({ hostname, port: socksPort });
@@ -349,7 +295,6 @@ async function establishSocksConnection(addrType, address, port, parsedSocks5Con
     writer.releaseLock(); reader.releaseLock();
     return socket;
 }
-
 function parseSocksConfig(address) {
     let [latter, former] = address.split("@").reverse(); let username, password, hostname, socksPort;
     if (former) { const formers = former.split(":"); if (formers.length !== 2) throw new Error(E9);[username, password] = formers; }
@@ -357,35 +302,26 @@ function parseSocksConfig(address) {
     hostname = latters.join(":"); if (hostname.includes(":") && !/^\[.*\]$/.test(hostname)) throw new Error(E9);
     return { username, password, hostname, socksPort };
 }
-
 function base64ToArray(b64Str) {
     if (!b64Str) return { error: null };
     try { b64Str = b64Str.replace(/-/g, '+').replace(/_/g, '/'); return { earlyData: Uint8Array.from(atob(b64Str), (c) => c.charCodeAt(0)).buffer, error: null }; }
     catch (error) { return { error }; }
 }
-
 function isValidFormat(uuid) { return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(uuid); }
-
 function closeSocketQuietly(socket) { try { if (socket.readyState === 1 || socket.readyState === 2) socket.close(); } catch (error) { } }
-
 const hexTable = Array.from({ length: 256 }, (v, i) => (i + 256).toString(16).slice(1));
-
 function formatIdentifier(arr, offset = 0) {
     const id = (hexTable[arr[offset]] + hexTable[arr[offset + 1]] + hexTable[arr[offset + 2]] + hexTable[arr[offset + 3]] + "-" + hexTable[arr[offset + 4]] + hexTable[arr[offset + 5]] + "-" + hexTable[arr[offset + 6]] + hexTable[arr[offset + 7]] + "-" + hexTable[arr[offset + 8]] + hexTable[arr[offset + 9]] + "-" + hexTable[arr[offset + 10]] + hexTable[arr[offset + 11]] + hexTable[arr[offset + 12]] + hexTable[arr[offset + 13]] + hexTable[arr[offset + 14]] + hexTable[arr[offset + 15]]).toLowerCase();
     if (!isValidFormat(id)) throw new TypeError(E8);
     return id;
 }
-
 async function handleSocksCheck(request) {
     const url = new URL(request.url);
     const idx = url.searchParams.get('index');
-
-    // 单个 SOCKS 检测函数
     const checkOne = async (socksConfig) => {
         const startTime = Date.now();
         try {
             const parsed = parseSocksConfig(socksConfig.config);
-            // 测试连接到 1.1.1.1:80
             const socket = await establishSocksConnection(
                 A1,
                 '1.1.1.1',
@@ -393,14 +329,10 @@ async function handleSocksCheck(request) {
                 parsed
             );
             const latency = Date.now() - startTime;
-
-            // 立即关闭连接
             try {
                 socket.close();
             } catch (e) {
-                // 忽略关闭错误
             }
-
             return {
                 region: socksConfig.region,
                 status: 'online',
@@ -415,8 +347,6 @@ async function handleSocksCheck(request) {
             };
         }
     };
-
-    // 如果指定了索引，只检测单个 SOCKS
     if (idx !== null) {
         const i = parseInt(idx);
         if (i >= 0 && i < SC.length) {
@@ -429,13 +359,10 @@ async function handleSocksCheck(request) {
             });
         }
     }
-
-    // 检测所有 SOCKS - 顺序逐个检测
     const results = [];
     for (const socksConfig of SC) {
         results.push(await checkOne(socksConfig));
     }
-
     return new Response(JSON.stringify({ results }), {
         headers: {
             'Content-Type': 'application/json',
@@ -443,10 +370,9 @@ async function handleSocksCheck(request) {
         }
     });
 }
-
 function getFilterHTML() {
     const needPassword = !!(PW && PW.trim());
     const passwordValue = PW || '';
-    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sinppets 节点订阅</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;display:flex;align-items:center;justify-content:center}.container{max-width:1400px;width:100%;background:#fff;border-radius:12px}#loginContainer.container{max-width:480px;box-shadow:0 10px 40px rgba(0,0,0,0.2);overflow:hidden}.header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:20px;text-align:center}.header h2{font-size:24px;margin-bottom:8px}.header p{font-size:14px;opacity:0.9}.section{padding:8px 12px;border-bottom:1px solid #eee}.section:last-child{border-bottom:none}.section-title{font-size:16px;font-weight:600;margin-bottom:10px;color:#333;display:flex;align-items:center}.section-title::before{content:'';display:inline-block;width:4px;height:16px;background:#667eea;margin-right:8px;border-radius:2px}.btn-group{display:flex;gap:4px;margin-bottom:10px}.btn-small{padding:6px 12px;border:1px solid #ddd;border-radius:6px;background:#fff;font-size:13px;cursor:pointer;transition:all 0.3s}.btn-small:hover{background:#f0f0f0;transform:translateY(-1px)}.btn-small.active{background:#667eea;color:#fff;border-color:#667eea}.domain-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.domain-item{display:flex;align-items:center;padding:6px 8px;border:2px solid #e0e0e0;border-radius:6px;background:#fafafa;font-size:13px;cursor:pointer;transition:all 0.3s}.domain-item:hover{background:#f0f0f0;border-color:#667eea}.domain-item.selected{background:#f0f4ff;border-color:#667eea;box-shadow:0 2px 8px rgba(102,126,234,0.2)}.domain-item input{margin-right:8px;cursor:pointer}.port-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.port-item{display:flex;align-items:center;justify-content:center;padding:10px;border:2px solid #e0e0e0;border-radius:6px;background:#fafafa;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.3s}.port-item:hover{background:#f0f0f0;border-color:#667eea}.port-item.selected{background:#f0f4ff;border-color:#667eea;box-shadow:0 2px 8px rgba(102,126,234,0.2)}.generate-btn{width:100%;padding:14px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(102,126,234,0.4)}.generate-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,0.5)}.generate-btn:active{transform:translateY(0)}.result{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:8px;border-left:4px solid #667eea}.result input{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;font-family:monospace;font-size:12px;margin-bottom:10px;background:#fff}.copy-btn{padding:8px 16px;background:#4CAF50;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;transition:all 0.3s}.copy-btn:hover{background:#45a049;transform:translateY(-1px)}.socks-info{background:#e8f0fe;padding:12px;border-radius:6px;font-size:13px;color:#1967d2}.socks-info strong{display:block;margin-bottom:8px}.socks-status-container{display:flex;flex-wrap:wrap;gap:8px}.socks-status-card{background:#f8f9fa;border:2px solid #e0e0e0;border-radius:6px;padding:6px 8px;transition:all 0.3s;display:flex;flex-direction:column;gap:4px;flex:0 0 auto;min-width:240px;max-width:280px}.socks-status-card.online{border-color:#4CAF50;background:#f1f8f4}.socks-status-card.offline{border-color:#f44336;background:#fef1f0}.socks-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.socks-region{font-weight:600;font-size:13px;color:#333;min-width:60px}.socks-ip{font-size:11px;color:#666;font-family:monospace;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px}.socks-latency{font-size:12px;color:#666;text-align:right}.status-indicator{font-size:11px;padding:3px 10px;border-radius:12px;font-weight:500;white-space:nowrap}.status-indicator.online{background:#4CAF50;color:#fff}.status-indicator.offline{background:#f44336;color:#fff}.status-indicator.checking{background:#9e9e9e;color:#fff}.login-container{padding:24px 32px;max-width:420px;margin:0 auto}.login-form{display:flex;flex-direction:column;gap:16px}.input-group{display:flex;flex-direction:column;gap:6px}.input-group label{font-size:14px;font-weight:500;color:#333}.input-group input{padding:12px;border:2px solid #e0e0e0;border-radius:8px;font-size:14px;transition:all 0.3s}.input-group input:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,0.1)}.login-btn{padding:14px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(102,126,234,0.4)}.login-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,0.5)}.login-btn:active{transform:translateY(0)}.error-msg{color:#f44336;font-size:13px;padding:10px;background:#ffebee;border-radius:6px;display:none}.logout-btn{position:absolute;top:20px;right:20px;padding:8px 16px;background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;font-size:12px;cursor:pointer;transition:all 0.3s}.logout-btn:hover{background:rgba(255,255,255,0.3)}@media (max-width:480px){.domain-grid{grid-template-columns:1fr}.port-grid{grid-template-columns:1fr}.logout-btn{position:static;margin-top:10px;width:100%}}</style></head><body><div class="container" id="loginContainer" style="display:${needPassword ? 'block' : 'none'}"><div class="header"><h2>🔐 登录验证</h2><p>请输入访问密码</p></div><div class="login-container"><form class="login-form" id="loginForm"><div class="input-group"><label for="password">访问密码</label><input type="password" id="password" placeholder="请输入密码" required autofocus></div><div class="error-msg" id="errorMsg">密码错误，请重试</div><button type="submit" class="login-btn">🔓 登录</button></form></div></div><div class="container" id="mainContainer" style="display:${needPassword ? 'none' : 'block'}"><div class="header" style="position:relative"><h2>🚀 Sinppets 节点订阅</h2><p>选择域名和端口生成专属订阅链接</p>${needPassword ? '<button class="logout-btn" onclick="logout()">🚪 退出登录</button>' : ''}</div><form id="filterForm"><div class="section"><div class="section-title">域名选择</div><div class="btn-group"><button type="button" class="btn-small" onclick="selectAll('domain')">全选</button><button type="button" class="btn-small" onclick="clearAll('domain')">清空</button></div><div class="domain-grid" id="domainGrid"></div></div><div class="section"><div class="section-title">端口选择</div><div class="btn-group"><button type="button" class="btn-small" onclick="selectAll('port')">全选</button><button type="button" class="btn-small" onclick="clearAll('port')">清空</button></div><div class="port-grid"><div class="port-item" data-port="443" onclick="togglePort(this)">🔒 443 (HTTPS)</div><div class="port-item" data-port="80" onclick="togglePort(this)">🌐 80 (HTTP)</div></div></div>                <div class="section"><div class="section-title">📡 SOCKS代理状态<button type="button" class="btn-small" style="margin-left:auto" onclick="checkSocksStatus()">刷新检测</button></div><div id="socksStatusContainer" class="socks-status-container">${SC.map((s, i) => `<div class="socks-status-card" data-index="${i}" data-config="${s.config}"><div class="socks-card-top"><span class="socks-region">${s.region}</span><span class="socks-ip" id="ip-${i}">---</span><span class="status-indicator checking" id="status-${i}">⚪ 检测中</span></div><div class="socks-latency" id="latency-${i}">---</div></div>`).join('')}</div></div><button type="submit" class="generate-btn">✨ 生成订阅链接</button></form><div id="result" class="result" style="display:none"><input type="text" id="subscriptionUrl" readonly><button class="copy-btn" onclick="copyUrl()">📋 复制链接</button></div></div><script>const PASSWORD='${passwordValue}';const needPassword=${needPassword};const domains=[${DD.map(d => `{name:"${d.name || d.domain}",domain:"${d.domain}"}`).join(',')}];function parseIP(config){try{const atIndex=config.lastIndexOf('@');if(atIndex===-1)return'未知';const hostPort=config.substring(atIndex+1);const colonIndex=hostPort.lastIndexOf(':');if(colonIndex===-1)return hostPort;return hostPort.substring(0,colonIndex)}catch(e){return'解析失败'}}function checkLogin(){if(!needPassword)return true;return sessionStorage.getItem('sinppets_logged_in')==='true'}function showMain(){document.getElementById('loginContainer').style.display='none';document.getElementById('mainContainer').style.display='block'}function showLogin(){document.getElementById('loginContainer').style.display='block';document.getElementById('mainContainer').style.display='none'}function logout(){sessionStorage.removeItem('sinppets_logged_in');showLogin();const pwdInput=document.getElementById('password');if(pwdInput)pwdInput.value=''}const loginForm=document.getElementById('loginForm');if(loginForm){loginForm.addEventListener('submit',function(e){e.preventDefault();const pwd=document.getElementById('password').value;if(pwd===PASSWORD){sessionStorage.setItem('sinppets_logged_in','true');showMain();initDomains();selectAll('port');displayIPs();document.getElementById('errorMsg').style.display='none'}else{document.getElementById('errorMsg').style.display='block';document.getElementById('password').value='';document.getElementById('password').focus()}})}function displayIPs(){const cards=document.querySelectorAll('.socks-status-card');cards.forEach(card=>{const idx=card.dataset.index;const config=card.dataset.config;const ipEl=document.getElementById('ip-'+idx);if(ipEl)ipEl.textContent=parseIP(config)})}function initDomains(){const grid=document.getElementById('domainGrid');grid.innerHTML='';domains.forEach(d=>{const div=document.createElement('div');div.className='domain-item';div.innerHTML=\`<input type="checkbox" name="domain" value="\${d.domain}" onchange="updateItemStyle(this)">\${d.name}\`;div.onclick=(e)=>{if(e.target.type!=='checkbox'){const cb=div.querySelector('input');cb.checked=!cb.checked;updateItemStyle(cb)}};grid.appendChild(div)})}function updateItemStyle(checkbox){const item=checkbox.closest('.domain-item');item.classList.toggle('selected',checkbox.checked)}function togglePort(el){el.classList.toggle('selected')}function selectAll(type){if(type==='domain'){document.querySelectorAll('[name="domain"]').forEach(cb=>{cb.checked=true;updateItemStyle(cb)})}else if(type==='port'){document.querySelectorAll('.port-item').forEach(el=>el.classList.add('selected'))}}function clearAll(type){if(type==='domain'){document.querySelectorAll('[name="domain"]').forEach(cb=>{cb.checked=false;updateItemStyle(cb)})}else if(type==='port'){document.querySelectorAll('.port-item').forEach(el=>el.classList.remove('selected'))}}document.getElementById('filterForm').onsubmit=function(e){e.preventDefault();const selectedDomains=Array.from(document.querySelectorAll('input[name="domain"]:checked')).map(cb=>cb.value);const selectedPorts=Array.from(document.querySelectorAll('.port-item.selected')).map(el=>el.dataset.port);const params=new URLSearchParams();if(selectedDomains.length>0)params.append('domains',selectedDomains.join(','));if(selectedPorts.length>0)params.append('ports',selectedPorts.join(','));const url=window.location.origin+'/${T}'+(params.toString()?'?'+params.toString():'');document.getElementById('subscriptionUrl').value=url;document.getElementById('result').style.display='block';document.getElementById('subscriptionUrl').scrollIntoView({behavior:'smooth',block:'center'})};function copyUrl(){const input=document.getElementById('subscriptionUrl');input.select();document.execCommand('copy');const btn=event.target;const originalText=btn.textContent;btn.textContent='✅ 已复制!';btn.style.background='#66bb6a';setTimeout(()=>{btn.textContent=originalText;btn.style.background='#4CAF50'},2000)}async function checkSocksStatus(){const cards=document.querySelectorAll('.socks-status-card');cards.forEach(card=>{card.classList.remove('online','offline');const idx=card.dataset.index;document.getElementById('status-'+idx).className='status-indicator checking';document.getElementById('status-'+idx).textContent='⚪ 检测中';document.getElementById('latency-'+idx).textContent='---'});for(let i=0;i<cards.length;i++){const card=cards[i],idx=card.dataset.index,statusEl=document.getElementById('status-'+idx),latencyEl=document.getElementById('latency-'+idx);statusEl.textContent='⏳';try{const response=await fetch('/api/check-socks?index='+idx);const result=await response.json();if(result.status==='online'){statusEl.className='status-indicator online';statusEl.textContent='🟢 在线';latencyEl.textContent='延迟: '+result.latency+'ms';card.classList.add('online')}else{statusEl.className='status-indicator offline';statusEl.textContent='🔴 离线';latencyEl.textContent='无法连接';card.classList.add('offline')}}catch(error){statusEl.className='status-indicator offline';statusEl.textContent='🔴 错误';latencyEl.textContent='检测失败';card.classList.add('offline')}}}window.onload=()=>{if(checkLogin()){showMain();initDomains();selectAll('port');displayIPs();setTimeout(checkSocksStatus,500)}else if(needPassword){showLogin()}else{initDomains();selectAll('port');displayIPs();setTimeout(checkSocksStatus,500)}}</script></body></html>`;
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sinppets 节点订阅</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;display:flex;align-items:center;justify-content:center}.container{max-width:1056px;width:100%;background:#fff;border-radius:12px}#loginContainer.container{max-width:480px;box-shadow:0 10px 40px rgba(0,0,0,0.2);overflow:hidden}.header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:20px;text-align:center}.header h2{font-size:24px;margin-bottom:8px}.header p{font-size:14px;opacity:0.9}.section{padding:8px 12px;border-bottom:1px solid #eee}.section:last-child{border-bottom:none}.section-title{font-size:16px;font-weight:600;margin-bottom:10px;color:#333;display:flex;align-items:center}.section-title::before{content:'';display:inline-block;width:4px;height:16px;background:#667eea;margin-right:8px;border-radius:2px}.btn-group{display:flex;gap:4px;margin-bottom:10px}.btn-small{padding:6px 12px;border:1px solid #ddd;border-radius:6px;background:#fff;font-size:13px;cursor:pointer;transition:all 0.3s}.btn-small:hover{background:#f0f0f0;transform:translateY(-1px)}.btn-small.active{background:#667eea;color:#fff;border-color:#667eea}.domain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.domain-item{display:flex;align-items:center;padding:6px 8px;border:2px solid #e0e0e0;border-radius:6px;background:#fafafa;font-size:13px;cursor:pointer;transition:all 0.3s}.domain-item:hover{background:#f0f0f0;border-color:#667eea}.domain-item.selected{background:#f0f4ff;border-color:#667eea;box-shadow:0 2px 8px rgba(102,126,234,0.2)}.domain-item input{margin-right:8px;cursor:pointer}.port-grid{display:flex;gap:8px}.port-item{display:flex;align-items:center;justify-content:flex-start;padding:6px 8px;border:2px solid #e0e0e0;border-radius:6px;background:#fafafa;font-size:13px;cursor:pointer;transition:all 0.3s;width:fit-content}.port-item:hover{background:#f0f0f0;border-color:#667eea}.port-item.selected{background:#f0f4ff;border-color:#667eea;box-shadow:0 2px 8px rgba(102,126,234,0.2)}.port-item input{margin-right:8px;cursor:pointer}.generate-btn{width:100%;padding:14px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(102,126,234,0.4)}.generate-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,0.5)}.generate-btn:active{transform:translateY(0)}.result{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:8px;border-left:4px solid #667eea}.result input{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;font-family:monospace;font-size:12px;margin-bottom:10px;background:#fff}.copy-btn{padding:8px 16px;background:#4CAF50;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;transition:all 0.3s}.copy-btn:hover{background:#45a049;transform:translateY(-1px)}.socks-info{background:#e8f0fe;padding:12px;border-radius:6px;font-size:13px;color:#1967d2}.socks-info strong{display:block;margin-bottom:8px}.socks-status-container{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-start}.socks-status-card{background:#f8f9fa;border:2px solid #e0e0e0;border-radius:6px;padding:10px;transition:all 0.3s;display:flex;flex-direction:column;gap:6px;flex:0 0 200px;width:200px}.socks-status-card.online{border-color:#4CAF50;background:#f1f8f4}.socks-status-card.offline{border-color:#f44336;background:#fef1f0}.socks-card-row{display:flex;justify-content:space-between;align-items:center;gap:8px}.socks-region{font-weight:600;font-size:13px;color:#333;flex-shrink:0}.socks-ip{font-size:11px;color:#666;font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;text-align:right}.status-indicator{font-size:11px;padding:3px 8px;border-radius:12px;font-weight:500;white-space:nowrap;flex-shrink:0}.status-indicator.online{background:#4CAF50;color:#fff}.status-indicator.offline{background:#f44336;color:#fff}.status-indicator.checking{background:#9e9e9e;color:#fff}.socks-latency{font-size:11px;color:#666;flex:1;text-align:right}.login-container{padding:24px 32px;max-width:420px;margin:0 auto}.login-form{display:flex;flex-direction:column;gap:16px}.input-group{display:flex;flex-direction:column;gap:6px}.input-group label{font-size:14px;font-weight:500;color:#333}.input-group input{padding:12px;border:2px solid #e0e0e0;border-radius:8px;font-size:14px;transition:all 0.3s}.input-group input:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,0.1)}.login-btn{padding:14px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(102,126,234,0.4)}.login-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,0.5)}.login-btn:active{transform:translateY(0)}.error-msg{color:#f44336;font-size:13px;padding:10px;background:#ffebee;border-radius:6px;display:none}.logout-btn{position:absolute;top:20px;right:20px;padding:8px 16px;background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;font-size:12px;cursor:pointer;transition:all 0.3s}.logout-btn:hover{background:rgba(255,255,255,0.3)}@media (max-width:480px){.domain-grid{grid-template-columns:1fr}.port-grid{grid-template-columns:1fr}.logout-btn{position:static;margin-top:10px;width:100%}}</style></head><body><div class="container" id="loginContainer" style="display:${needPassword ? 'block' : 'none'}"><div class="header"><h2>🔐 登录验证</h2><p>请输入访问密码</p></div><div class="login-container"><form class="login-form" id="loginForm"><div class="input-group"><label for="password">访问密码</label><input type="password" id="password" placeholder="请输入密码" required autofocus></div><div class="error-msg" id="errorMsg">密码错误，请重试</div><button type="submit" class="login-btn">🔓 登录</button></form></div></div><div class="container" id="mainContainer" style="display:${needPassword ? 'none' : 'block'}"><div class="header" style="position:relative"><h2>🚀 Sinppets 节点订阅</h2><p>选择域名和端口生成专属订阅链接</p>${needPassword ? '<button class="logout-btn" onclick="logout()">🚪 退出登录</button>' : ''}</div><form id="filterForm"><div class="section"><div class="section-title">优选域名</div><div class="btn-group"><button type="button" class="btn-small" onclick="selectAll('domain')">全选</button><button type="button" class="btn-small" onclick="clearAll('domain')">清空</button></div><div class="domain-grid" id="domainGrid"></div></div><div class="section"><div class="section-title">端口选择</div><div class="btn-group"><button type="button" class="btn-small" onclick="selectAll('port')">全选</button><button type="button" class="btn-small" onclick="clearAll('port')">清空</button></div><div class="port-grid" id="portGrid"><div class="port-item"><input type="checkbox" name="port" value="443" onchange="updateItemStyle(this)">🔒 443 (HTTPS)</div><div class="port-item"><input type="checkbox" name="port" value="80" onchange="updateItemStyle(this)">🌐 80 (HTTP)</div></div></div>                <div class="section"><div class="section-title">📡 SOCKS代理状态<button type="button" class="btn-small" style="margin-left:auto" onclick="checkSocksStatus()">刷新检测</button></div><div id="socksStatusContainer" class="socks-status-container">${SC.map((s, i) => `<div class="socks-status-card" data-index="${i}" data-config="${s.config}"><div class="socks-card-row"><span class="socks-region">${s.region}</span><span class="socks-ip" id="ip-${i}">---</span></div><div class="socks-card-row"><span class="status-indicator checking" id="status-${i}">⚪ 在线</span><span class="socks-latency" id="latency-${i}">---</span></div></div>`).join('')}</div></div><button type="submit" class="generate-btn">✨ 生成订阅链接</button></form><div id="result" class="result" style="display:none"><input type="text" id="subscriptionUrl" readonly><button class="copy-btn" onclick="copyUrl()">📋 复制链接</button></div></div><script>const PASSWORD='${passwordValue}';const needPassword=${needPassword};const domains=[${DD.map(d => `{name:"${d.name || d.domain}",domain:"${d.domain}"}`).join(',')}];function parseIP(config){try{const atIndex=config.lastIndexOf('@');if(atIndex===-1)return'未知';const hostPort=config.substring(atIndex+1);const colonIndex=hostPort.lastIndexOf(':');if(colonIndex===-1)return hostPort;return hostPort.substring(0,colonIndex)}catch(e){return'解析失败'}}function checkLogin(){if(!needPassword)return true;return sessionStorage.getItem('sinppets_logged_in')==='true'}function showMain(){document.getElementById('loginContainer').style.display='none';document.getElementById('mainContainer').style.display='block'}function showLogin(){document.getElementById('loginContainer').style.display='block';document.getElementById('mainContainer').style.display='none'}function logout(){sessionStorage.removeItem('sinppets_logged_in');showLogin();const pwdInput=document.getElementById('password');if(pwdInput)pwdInput.value=''}const loginForm=document.getElementById('loginForm');if(loginForm){loginForm.addEventListener('submit',function(e){e.preventDefault();const pwd=document.getElementById('password').value;if(pwd===PASSWORD){sessionStorage.setItem('sinppets_logged_in','true');showMain();initDomains();displayIPs();document.getElementById('errorMsg').style.display='none'}else{document.getElementById('errorMsg').style.display='block';document.getElementById('password').value='';document.getElementById('password').focus()}})}function displayIPs(){const cards=document.querySelectorAll('.socks-status-card');cards.forEach(card=>{const idx=card.dataset.index;const config=card.dataset.config;const ipEl=document.getElementById('ip-'+idx);if(ipEl)ipEl.textContent=parseIP(config)})}function initDomains(){const grid=document.getElementById('domainGrid');grid.innerHTML='';domains.forEach(d=>{const div=document.createElement('div');div.className='domain-item';div.innerHTML=\`<input type="checkbox" name="domain" value="\${d.domain}" onchange="updateItemStyle(this)">\${d.name}\`;div.onclick=(e)=>{if(e.target.type!=='checkbox'){const cb=div.querySelector('input');cb.checked=!cb.checked;updateItemStyle(cb)}};grid.appendChild(div)})}function updateItemStyle(checkbox){const item=checkbox.closest('.domain-item, .port-item');item.classList.toggle('selected',checkbox.checked)}function selectAll(type){const selector=type==='domain'?'[name="domain"]':'[name="port"]';document.querySelectorAll(selector).forEach(cb=>{cb.checked=true;updateItemStyle(cb)})}function clearAll(type){const selector=type==='domain'?'[name="domain"]':'[name="port"]';document.querySelectorAll(selector).forEach(cb=>{cb.checked=false;updateItemStyle(cb)})}document.getElementById('filterForm').onsubmit=function(e){e.preventDefault();const selectedDomains=Array.from(document.querySelectorAll('input[name="domain"]:checked')).map(cb=>cb.value);const selectedPorts=Array.from(document.querySelectorAll('input[name="port"]:checked')).map(cb=>cb.value);const params=new URLSearchParams();if(selectedDomains.length>0)params.append('domains',selectedDomains.join(','));if(selectedPorts.length>0)params.append('ports',selectedPorts.join(','));const url=window.location.origin+'/${T}'+(params.toString()?'?'+params.toString():'');document.getElementById('subscriptionUrl').value=url;document.getElementById('result').style.display='block';document.getElementById('subscriptionUrl').scrollIntoView({behavior:'smooth',block:'center'})};function copyUrl(){const input=document.getElementById('subscriptionUrl');input.select();document.execCommand('copy');const btn=event.target;const originalText=btn.textContent;btn.textContent='✅ 已复制!';btn.style.background='#66bb6a';setTimeout(()=>{btn.textContent=originalText;btn.style.background='#4CAF50'},2000)}async function checkSocksStatus(){const cards=document.querySelectorAll('.socks-status-card');cards.forEach(card=>{card.classList.remove('online','offline');const idx=card.dataset.index;document.getElementById('status-'+idx).className='status-indicator checking';document.getElementById('status-'+idx).textContent='⚪ 检测中';document.getElementById('latency-'+idx).textContent='---'});for(let i=0;i<cards.length;i++){const card=cards[i],idx=card.dataset.index,statusEl=document.getElementById('status-'+idx),latencyEl=document.getElementById('latency-'+idx);statusEl.textContent='⏳';try{const response=await fetch('/api/check-socks?index='+idx);const result=await response.json();if(result.status==='online'){statusEl.className='status-indicator online';statusEl.textContent='🟢 在线';latencyEl.textContent='延迟: '+result.latency+'ms';card.classList.add('online')}else{statusEl.className='status-indicator offline';statusEl.textContent='🔴 离线';latencyEl.textContent='无法连接';card.classList.add('offline')}}catch(error){statusEl.className='status-indicator offline';statusEl.textContent='🔴 错误';latencyEl.textContent='检测失败';card.classList.add('offline')}}}function initPorts(){const grid=document.getElementById('portGrid');const items=grid.querySelectorAll('.port-item');items.forEach(item=>{item.onclick=(e)=>{if(e.target.type!=='checkbox'){const cb=item.querySelector('input');cb.checked=!cb.checked;updateItemStyle(cb)}}})}window.onload=()=>{if(checkLogin()){showMain();initDomains();initPorts();displayIPs();setTimeout(checkSocksStatus,500)}else if(needPassword){showLogin()}else{initDomains();initPorts();displayIPs();setTimeout(checkSocksStatus,500)}}</script></body></html>`;
 
 }
