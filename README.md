@@ -122,11 +122,11 @@ const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 ```
 
 
-<img width="1004" height="651" alt="image" src="https://github.com/user-attachments/assets/a8abdda9-7bdd-4184-bf71-2cd4b39e665a" />
+<img width="532" height="350" alt="image" src="https://github.com/user-attachments/assets/6447f9b4-d958-463e-b37b-fbd68387ac05" />
 
-<img width="1456" height="756" alt="image" src="https://github.com/user-attachments/assets/38edb9e0-bca9-49c6-b283-5345a1946ffc" />
+<img width="1144" height="780" alt="image" src="https://github.com/user-attachments/assets/536a1d33-1dc5-44c4-a23d-645dd432c6cf" />
 
-<img width="542" height="157" alt="image" src="https://github.com/user-attachments/assets/c6667e11-ab56-433c-b10e-2be2ff028267" />
+<img width="531" height="250" alt="image" src="https://github.com/user-attachments/assets/58019867-c9f0-4c48-9218-0dd018842795" />
 
 <img width="1125" height="869" alt="image" src="https://github.com/user-attachments/assets/6f5ad951-8f0d-4b94-b456-080f88f05e74" />
 
