@@ -85,7 +85,7 @@ const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 ### 3. 获取配置文件链接 (CU)
 
-1. 在您的私有仓库中，点击 `config.json` 文件
+1. 在您的私有仓库中，新建编辑 `config.json` 文件
 2. 点击右上角的 **Raw** 按钮
 3. 复制浏览器地址栏中的链接
    - 格式应为: `https://raw.githubusercontent.com/用户名/仓库名/main/config.json`
