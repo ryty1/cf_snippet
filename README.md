@@ -16,13 +16,13 @@
    ```
 3. **【可选】Github远程配置**
 
-```javascript
-// 【必须】您的 config.json 原始 Raw 链接 (去掉 ?token=...)
-const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
+   ```javascript
+   // 【必须】您的 config.json 原始 Raw 链接 (去掉 ?token=...)
+   const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
 
-// 【必须】您的 GitHub Token (必须勾选 repo 权限)
-const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-```
+   // 【必须】您的 GitHub Token (必须勾选 repo 权限)
+   const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+   ```
 
 4. **（可选）修改 FA 和 FP 回退地址**
    ```javascript
