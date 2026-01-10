@@ -1,35 +1,125 @@
-## 变量修改设置
-- 修改 `T` (UUID) 为您自己的 UUID
-- 设置 `PW` 为强密码（或留空禁用密码）
-- 配置 `SC` 数组，添加 SOCKS5 落地
+# Sinppets 配置文件说明
 
-```bash
-// 启用 socks5 落地，可按格式添加：
-const SC = [
-    { region: '新加坡', config: 'user:password@ip:port' },
-    { region: '香  港', config: 'user:password@ip:port' }
-];
+## 🛠️ 变量修改设置
 
-或者
+请在脚本顶部修改以下变量：
 
-const SC = [{ region: '新加坡', config: 'user:password@ip:port' }, { region: '香  港', config: 'user:password@ip:port' }];
+### 基本设置
+1. **修改 T (UUID) 为您自己的 UUID**
+   ```javascript
+   const T = '4bc511be-7d08-4487-966b-12f40fd5014a';
+   ```
 
-// 不启用socks5 ：
-const SC = [];
+2. **设置 PW 为强密码（或留空禁用密码）**
+   ```javascript
+   const PW = 'abc123456';
+   ```
+
+3. **（可选）修改 FA 和 FP 回退地址**
+   ```javascript
+   const FA = 'ProxyIP.cmliussss.net'; // 回退域名
+   const FP = '443';                 // 回退端口
+   ```
+
+### 节点配置
+
+4. **配置 SC 数组，添加 SOCKS5 落地**
+   ```javascript
+   // 启用 socks5 落地，可按格式添加：
+   const SC = [
+       { region: '新加坡', config: 'user:password@ip:port' },
+       { region: '香  港', config: 'user:password@ip:port' }
+   ];
+   
+   // 或者单行格式：
+   const SC = [{ region: '新加坡', config: 'user:password@ip:port' }, { region: '香  港', config: 'user:password@ip:port' }];
+   
+   // 不启用socks5 ：
+   const SC = [];
+   ```
+
+5. **配置 DD 数组，按格式添加您的优选域名**
+   ```javascript
+   const DD = [
+       { domain: "cf.sk8.de5.net" },
+       { domain: "cf.090227.xyz" }
+   ];
+   ```
+
+## 🌐 面板访问
+
+配置完成后，您的面板地址为：
 ```
-- 配置 `PI` 数组，添加 ProxyIP 落地
-
-```bash
-// 启用 ProxyIP 落地，可按格式添加：
-const PI = [{ region: '新加坡', config: '123.123.123.123' }, { region: '香  港', config: '123.123.123.123' }];
-
-// 不启用 `ProxyIP` 落地 ：
-const PI = [];
+https://您的域名
 ```
 
--  配置 `DD` 数组，按格式添加您的优选域名
-- （可选）修改 `FA` 和 `FP` 回退地址
--  面板地址：`https://域名`
+---
+## Github 远程配置
+### 1. 创建 GitHub 私有仓库（进阶配置），突破 Sinppets 32KB 大小限制
+
+1. 登录 GitHub，点击右上角 **+** -> **New repository**
+2. Repository name 填入 `sinppets-config`（或任意名称）
+3. **关键步骤**：勾选 **Private**（私有）
+4. 点击 **Create repository**
+5. 点击 **uploading an existing file** 上传您的 `config.json`
+```javascript
+// 您的 config.json 原始链接
+const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
+
+// 您的 GitHub Token (私有仓库必需，公开仓库可留空)
+// ⚠️ 私有仓库必填，且 Token 需勾选 'repo' 权限
+const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+```
+
+### 2. 获取访问授权 (Token)
+
+私有仓库必须配置 Token 才能访问：
+
+1. 访问 [**GitHub Tokens 设置页**](https://github.com/settings/tokens)
+2. 点击右上角 **Generate new token** -> **Generate new token (classic)**
+3. **Note** (备注): 随便填，例如 `sinppets`
+4. **Scopes** (权限): ⚠️ **必须勾选 `repo`** (Full control of private repositories)
+5. 点击页面底部 **Generate token**
+6. **复制生成的以 `ghp_` 开头的字符串** (关掉页面就看不到了！)
+
+### 3. 获取配置文件链接 (CU)
+
+1. 在您的私有仓库中，点击 `config.json` 文件
+2. 点击右上角的 **Raw** 按钮
+3. 复制浏览器地址栏中的链接
+   - 格式应为: `https://raw.githubusercontent.com/用户名/仓库名/main/config.json`
+   - 注意：如果链接包含 `?token=...`，请**去掉**问号及后面的所有内容，只保留 `.json` 结尾。
+
+---
+
+### 4. 最终配置代码
+
+将以下代码替换 `sinpetts.js` 顶部的变量设置：
+
+```javascript
+// 【必须】您的 config.json 原始 Raw 链接 (去掉 ?token=...)
+const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
+
+// 【必须】您的 GitHub Token (必须勾选 repo 权限)
+const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+```
+
+### 2. config.json 格式示例
+```json
+{
+  "socks": [
+    { "region": "新加坡", "config": "user:pass@1.2.3.4:12345" },
+    { "region": "香港", "config": "user:pass@1.2.3.4:12345" },
+    { "region": "日本", "config": "user:pass@1.2.3.4:12345" }
+  ],
+  "domains": [
+    { "domain": "cf.090227.xyz" },
+    { "domain": "cf.877771.xyz" },
+    { "domain": "freeyx.cloudflare88.eu.org" }
+  ]
+}
+```
+
 
 <img width="1004" height="651" alt="image" src="https://github.com/user-attachments/assets/a8abdda9-7bdd-4184-bf71-2cd4b39e665a" />
 
