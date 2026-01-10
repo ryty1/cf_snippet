@@ -14,13 +14,13 @@
    ```javascript
    const PW = 'abc123456';  // 默认
    ```
-3. **【可选】Github远程配置**
+3. **【可选】Github远程配置，不用可不配置，默认即可**
 
    ```javascript
-   // 【必须】您的 config.json 原始 Raw 链接 (去掉 ?token=...)
+   // 【注意】config.json 原始 Raw 链接 (去掉 ?token=...)
    const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
 
-   // 【必须】您的 GitHub Token (必须勾选 repo 权限)
+   // 【注意】您的 GitHub Token (必须勾选 repo 权限)
    const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
    ```
 
