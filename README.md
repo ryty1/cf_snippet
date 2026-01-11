@@ -88,7 +88,6 @@ https://您的域名
       ```javascript
    const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
    ```
-> 【注意】config.json 原始 Raw 链接 (去掉 ?token=...)
 
 > 【注意】您的 GitHub Token (必须勾选 repo 权限)
 
