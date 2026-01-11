@@ -34,7 +34,7 @@
 
 ### 节点配置(可选Github配置，脚本保持默认，无Github配置可在脚本中按需配置)
 
-5. **配置 SC 数组，添加 SOCKS5 落地**
+5. **配置 SC 数组，添加 SOCKS5 落地**，[Github 远程配置可默认不填]
    ```javascript
    // 启用 socks5 落地，可按格式添加：
    const SC = [
@@ -49,7 +49,7 @@
    const SC = [];
    ```
 
-6. **配置 DD 数组，按格式添加您的优选域名**
+6. **配置 DD 数组，按格式添加您的优选域名**，[Github 远程配置可默认不填]
    ```javascript
    const DD = [
        { domain: "cf.877774.xyz" },
