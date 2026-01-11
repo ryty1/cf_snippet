@@ -1,6 +1,8 @@
-# [Sinppets 文件](https://github.com/ryty1/cf_snippet/blob/main/snippet%E5%A4%9ASocks%E8%90%BD%E5%9C%B0(%E6%8E%A8%E8%8D%90%E7%89%88%E6%9C%AC).js) 配置说明
+# [Sinppets 文件](https://github.com/ryty1/cf_snippet/blob/main/vless.js) 配置说明
 
-## 🛠️ 变量修改设置
+> **【说明】**：脚本非原创，修改自 [老王](https://github.com/eooce/Cloudflare-proxy) 和 [CM大佬](https://github.com/cmliu/CF-Workers-BPSUB)脚本，个人自用修改版。
+
+## 🛠️ 变量修改设置（vless与ss脚本使用方法完全一致）
 
 请在脚本顶部修改以下变量：
 
