@@ -50,7 +50,7 @@
 6. **配置 DD 数组，按格式添加您的优选域名**
    ```javascript
    const DD = [
-       { domain: "cf.sk8.de5.net" },
+       { domain: "cf.877774.xyz" },
        { domain: "cf.090227.xyz" }
    ];
    ```
