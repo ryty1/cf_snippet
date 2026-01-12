@@ -322,13 +322,7 @@ async function eSocks(addrType, address, port, parsedSocks5Config) {
     writer.releaseLock(); reader.releaseLock();
     return socket;
 }
-function pSC(address) {
-    let [latter, former] = address.split("@").reverse(); let username, password, hostname, socksPort;
-    if (former) { const formers = former.split(":"); if (formers.length !== 2) throw new Error(E9);[username, password] = formers; }
-    const latters = latter.split(":"); socksPort = Number(latters.pop()); if (isNaN(socksPort)) throw new Error(E9);
-    hostname = latters.join(":"); if (hostname.includes(":") && !/^\[.*\]$/.test(hostname)) throw new Error(E9);
-    return { username, password, hostname, socksPort };
-}
+function pSC(s) { let u, p, h, pt; const ai = s.lastIndexOf('@'); if (ai > 0) { const ap = s.substring(0, ai), hp = s.substring(ai + 1), ci = ap.indexOf(':'); if (ci > 0) { u = ap.substring(0, ci); p = ap.substring(ci + 1); } const lc = hp.lastIndexOf(':'); if (lc > 0) { h = hp.substring(0, lc); pt = Number(hp.substring(lc + 1)); } else { h = hp; pt = 1080; } } else { const lc = s.lastIndexOf(':'); if (lc > 0) { h = s.substring(0, lc); pt = Number(s.substring(lc + 1)); } else { h = s; pt = 1080; } } if (isNaN(pt)) throw new Error(E9); return { username: u, password: p, hostname: h, socksPort: pt }; }
 function b64A(b64Str) {
     if (!b64Str) return { error: null };
     try { b64Str = b64Str.replace(/-/g, '+').replace(/_/g, '/'); return { earlyData: Uint8Array.from(atob(b64Str), (c) => c.charCodeAt(0)).buffer, error: null }; }
