@@ -117,10 +117,10 @@ function gLinks(domainList, uuid, workerDomain, filters = {}) {
     domainList.forEach(item => {
         if (SC.length > 0) {
             SC.forEach((socksConfig, socksIndex) => {
-                const { region } = socksConfig;
+                const { region, note } = socksConfig;
                 ports.forEach(port => {
                     const domainName = item.domain;
-                    const nodeName = `Sinppets-${region}-${domainName}-${port}`;
+                    const nodeName = `Sin-${region}-${note || ''}`;
                     const wsPathWithSocks = encodeURIComponent(`/?ed=2048&socks=${socksIndex}`);
                     const params = new URLSearchParams({
                         encryption: 'none',
