@@ -100,9 +100,9 @@ https://您的域名
 ```json
 {
   "socks": [
-    { "region": "新加坡", "config": "user:pass@1.2.3.4:12345" },
-    { "region": "香港", "config": "user:pass@1.2.3.4:12345" },
-    { "region": "日本", "config": "user:pass@1.2.3.4:12345" }
+    { "region": "新加坡", "config": "user:pass@1.2.3.4:12345", "note": "备注" },
+    { "region": "香港", "config": "user:pass@1.2.3.4:12345", "note": "备注" },
+    { "region": "日本", "config": "user:pass@1.2.3.4:12345", "note": "备注" }
   ],
   "domains": [
     { "domain": "cf.090227.xyz" },
