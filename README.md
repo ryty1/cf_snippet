@@ -126,11 +126,8 @@ https://您的域名
 
 ---
 
-<img width="1144" height="780" alt="image" src="https://github.com/user-attachments/assets/536a1d33-1dc5-44c4-a23d-645dd432c6cf" />
+<img width="1912" height="925" alt="image" src="https://github.com/user-attachments/assets/d00e7b61-9da7-43d0-ba35-653698e52849" />
 
----
-
-<img width="938" height="663" alt="image" src="https://github.com/user-attachments/assets/fedacb8c-124e-4389-bc21-0327f42a6510" />
 
 ---
 
