@@ -134,11 +134,11 @@ https://您的域名
 
 ---
 
-<img width="1910" height="892" alt="image" src="https://github.com/user-attachments/assets/b39b7033-c813-43bb-957a-2ec465ef75f9" />
+<img width="1910" height="600" alt="image" src="https://github.com/user-attachments/assets/b39b7033-c813-43bb-957a-2ec465ef75f9" />
 
 ---
 
-<img width="1910" height="892" alt="image" src="https://github.com/user-attachments/assets/fac32ead-acc2-42df-991a-9cb2acfaec23" />
+<img width="1910" height="600" alt="image" src="https://github.com/user-attachments/assets/fac32ead-acc2-42df-991a-9cb2acfaec23" />
 
 ---
 
