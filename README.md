@@ -1,6 +1,6 @@
 > **【说明】**：脚本非原创，修改自 [老王](https://github.com/eooce/Cloudflare-proxy) 和 [CM大佬](https://github.com/cmliu/CF-Workers-BPSUB)脚本，个人自用修改版。感谢各位大佬的技术奉献！
 ---
-# Snippets 文件[[vless](https://github.com/ryty1/cf_snippet/blob/main/vless.js)] / [[shadowsocks](https://github.com/ryty1/cf_snippet/blob/main/shadowsocks.js)] 配置说明
+# Snippets 文件[[vless](https://github.com/ryty1/cf_snippet/blob/main/vless.js)] / [[shadowsocks](https://github.com/ryty1/cf_snippet/blob/main/shadowsocks.js)] / [[config-manager](https://github.com/ryty1/cf_snippet/blob/main/config-manager.js)] 配置说明
 ---
 ## 🛠️ 变量修改设置（vless与ss脚本使用方法完全一致）
 
@@ -12,52 +12,13 @@
    const T = '4bc511be-7d08-4487-966b-12f40fd5014a';
    ```
 
-2. **设置登陆密码 PW 为强密码（或留空禁用密码）**
-   ```javascript
    const PW = 'abc123456';  // 默认
    ```
 3. **【可选】Github远程配置，不用可不配置，默认即可，需要配置请按下面 [进阶配置](#进阶配置) 操作**
-
    ```javascript
-   // 【注意】config.json 原始 Raw 链接 (去掉 ?token=...)
-   const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
-
-   // 【注意】您的 GitHub Token (必须勾选 repo 权限)
-   const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+   // config-manager 片段 项目域名 (非必选)
+   const VU = 'https://config-manager-domain.com';
    ```
-
-4. **（可选）修改 FA 和 FP 回退地址**
-   ```javascript
-   const FA = 'ProxyIP.cmliussss.net'; // 回退域名
-   const FP = '443';                 // 回退端口
-   ```
-
-### 节点配置(可选Github配置，脚本保持默认，无Github配置可在脚本中按需配置)
-
-5. **配置 SC 数组，添加 SOCKS5 落地**，[Github 远程配置可默认不填]
-   ```javascript
-   // 启用 socks5 落地，可按格式添加：
-   const SC = [
-       { region: '新加坡', config: 'user:password@ip:port' },
-       { region: '香  港', config: 'user:password@ip:port' }
-   ];
-   
-   // 或者单行格式：
-   const SC = [{ region: '新加坡', config: 'user:password@ip:port' }, { region: '香  港', config: 'user:password@ip:port' }];
-   
-   // 不启用socks5 ：
-   const SC = [];
-   ```
-
-6. **配置 DD 数组，按格式添加您的优选域名**，[Github 远程配置可默认不填]
-   ```javascript
-   const DD = [
-       { domain: "cf.877774.xyz" },
-       { domain: "cf.090227.xyz" }
-   ];
-   ```
-
-## 🌐 面板访问
 
 配置完成后，您的面板地址为：
 ```
@@ -87,38 +48,69 @@ https://您的域名
 5. 点击页面底部 **Generate token**
 6. **复制生成的以 `ghp_` 开头的字符串** (关掉页面就看不到了！)
 7. **配置脚本变量**
-      ```javascript
+   ```javascript
    const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
    ```
 
 > 【注意】您的 GitHub Token (必须勾选 repo 权限)
 
-### 3. 获取配置文件链接 (CU)
-
-1. 在您的私有仓库中，新建编辑 `config.json` 文件， config.json 格式示例
-   
-```json
-{
-  "socks": [
-    { "region": "新加坡", "config": "user:pass@1.2.3.4:12345", "note": "备注" },
-    { "region": "香港", "config": "user:pass@1.2.3.4:12345", "note": "备注" },
-    { "region": "日本", "config": "user:pass@1.2.3.4:12345", "note": "备注" }
-  ],
-  "domains": [
-    { "domain": "cf.090227.xyz" },
-    { "domain": "cf.877771.xyz" },
-    { "domain": "freeyx.cloudflare88.eu.org" }
-  ]
-}
-```
-2. 点击右上角的 **Raw** 按钮
-3. 复制浏览器地址栏中的链接
+8. 点击右上角的 **Raw** 按钮
+9. 复制浏览器地址栏中的链接
    - 格式应为: `https://raw.githubusercontent.com/用户名/仓库名/main/config.json`
    - 注意：如果链接包含 `?token=...`，请**去掉**问号及后面的所有内容，只保留 `.json` 结尾。
-4. **配置脚本**
-      ```javascript
+
+10. **配置脚本变量**
+
+   **vless.js / shadowsocks.js** (读取配置,使用 raw 格式):
+   ```javascript
    const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
    ```
+
+   **config-manager.js** (读写配置，使用 API 格式):
+   ```javascript
+   const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json';
+   ```
+
+### 4. 📦 config-manager.js 配置管理器（可选）
+
+独立的 GitHub 配置管理面板，支持在线管理 SOCKS5 落地和优选域名配置。
+
+#### 功能特点
+- 🔐 支持密码登录保护
+- 📝 在线添加/编辑/删除 SOCKS5 配置和优选域名
+- 🔄 拖拽排序功能
+- 📥 支持 JSON 文件批量导入
+- ✅ 实时检测 SOCKS5 在线状态
+- 💾 自动同步保存到 GitHub 私有仓库
+
+#### 变量配置 ，'VU' / 'SU' 可全选或者2选1的配置
+```javascript
+// GitHub API 配置地址 (用于读写 config.json)
+const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json';
+
+// GitHub Token (必须勾选 repo 权限)
+const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+
+// 登录密码
+const PW = 'your_password';
+
+// VLESS 订阅 片段 项目域名 (非必选)
+const VU = 'https://your-vless-domain.com';
+
+// Shadowsocks 订阅 片段 项目域名 (非必选)
+const SU = 'https://your-ss-domain.com';
+```
+
+---
+
+## 🔗 快速部署
+
+1. 在 Cloudflare Dashboard 创建三个 Snippets 片段
+2. 分别部署 `vless.js`、`shadowsocks.js`、`config-manager.js`
+3. 修改各脚本的变量配置
+4. 绑定自定义域名（可选）
+5. 访问域名即可使用
+
 
 ---
 
