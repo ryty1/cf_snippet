@@ -60,14 +60,15 @@ https://您的域名
 
 10. **vless.js / shadowsocks.js 片段变量配置**，VU / SU 变量 可全选或者2选1的配置
 
-   **vless.js / shadowsocks.js** (读取配置,使用 raw 格式):
+   
    ```javascript
+   // vless.js / shadowsocks.js (读取配置,使用 raw 格式):
    const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
 
    // VLESS 订阅 片段 项目域名 (非必选)
    const VU = 'https://your-vless-domain.com';
 
-// Shadowsocks 订阅 片段 项目域名 (非必选)
+   // Shadowsocks 订阅 片段 项目域名 (非必选)
    const SU = 'https://your-ss-domain.com';
    ```
 
