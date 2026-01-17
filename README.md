@@ -71,7 +71,7 @@ https://您的域名
    const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json';
    ```
 
-### 4. 📦 config-manager.js 配置管理器（可选）
+### 4. 📦 [[config-manager](https://github.com/ryty1/cf_snippet/blob/main/config-manager.js)]  配置管理器（可选）
 
 独立的 GitHub 配置管理面板，支持在线管理 SOCKS5 落地和优选域名配置。
 
