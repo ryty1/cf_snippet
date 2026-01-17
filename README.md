@@ -16,7 +16,14 @@
    ```javascript
    const PW = 'abc123456';  // 默认
    ```
-3. **【可选】Github远程配置，不用可不配置，默认即可，需要配置请按下面 [进阶配置](#进阶配置) 操作**
+
+3. **修改 Clash转换 后端**
+   ```javascript
+   const SB = 'https://123.abc.com';  // 下面pages项目域名地址
+   ```
+   > Clash转换后端配套定制[clash-sub-converter](https://github.com/ryty1/clash-sub-converter)项目，Fork本项目，直接pages部署，不用其他任何设置。
+   
+4. **【可选】Github远程配置，不用可不配置，默认即可，需要配置请按下面 [进阶配置](#进阶配置) 操作**
    
 
 配置完成后，您的面板地址为：
