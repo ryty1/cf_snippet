@@ -83,7 +83,7 @@ https://您的域名
 - ✅ 实时检测 SOCKS5 在线状态
 - 💾 自动同步保存到 GitHub 私有仓库
 
-#### 变量配置 ，'VU' / 'SU' 可全选或者2选1的配置
+#### 变量配置 ，VU / SU 变量 可全选或者2选1的配置
 ```javascript
 // GitHub API 配置地址 (用于读写 config.json)
 const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json';
