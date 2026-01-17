@@ -83,24 +83,17 @@ https://您的域名
 
 #### **config-manager** 片段变量配置 ，
    ```javascript
-   // GitHub API 配置地址 (用于读写 config.json)
+   // GitHub API 配置地址 (读取配置,使用 api 格式):
    const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json';
 
    // GitHub Token (必须勾选 repo 权限)
    const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
-   // 登录密码
-   const PW = 'your_password';
-
-   ```
-
-   ```javascript
    // config-manager 片段 项目域名 (非必选)
    const MU = 'https://config-manager-domain.com';
-   
-   ```javascript
-   //使用 API 格式，config.json文件可自动生成。
-   const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json';
+
+   // 登录密码
+   const PW = 'your_password';
 
    ```
 
