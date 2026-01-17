@@ -15,10 +15,7 @@
    const PW = 'abc123456';  // 默认
    ```
 3. **【可选】Github远程配置，不用可不配置，默认即可，需要配置请按下面 [进阶配置](#进阶配置) 操作**
-   ```javascript
-   // config-manager 片段 项目域名 (非必选)
-   const VU = 'https://config-manager-domain.com';
-   ```
+   
 
 配置完成后，您的面板地址为：
 ```
@@ -59,16 +56,17 @@ https://您的域名
    - 格式应为: `https://raw.githubusercontent.com/用户名/仓库名/main/config.json`
    - 注意：如果链接包含 `?token=...`，请**去掉**问号及后面的所有内容，只保留 `.json` 结尾。
 
-10. **配置脚本变量**
+10. **vless.js / shadowsocks.js 片段变量配置**，VU / SU 变量 可全选或者2选1的配置
 
    **vless.js / shadowsocks.js** (读取配置,使用 raw 格式):
    ```javascript
    const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
-   ```
 
-   **config-manager.js** (读写配置，使用 API 格式):
-   ```javascript
-   const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json';
+   // VLESS 订阅 片段 项目域名 (非必选)
+   const VU = 'https://your-vless-domain.com';
+
+// Shadowsocks 订阅 片段 项目域名 (非必选)
+   const SU = 'https://your-ss-domain.com';
    ```
 
 ### 4. 📦 [[config-manager](https://github.com/ryty1/cf_snippet/blob/main/config-manager.js)]  配置管理器（可选）
@@ -83,23 +81,29 @@ https://您的域名
 - ✅ 实时检测 SOCKS5 在线状态
 - 💾 自动同步保存到 GitHub 私有仓库
 
-#### 变量配置 ，VU / SU 变量 可全选或者2选1的配置
-```javascript
-// GitHub API 配置地址 (用于读写 config.json)
-const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json';
+#### **config-manager** 片段变量配置 ，
+   ```javascript
+   // GitHub API 配置地址 (用于读写 config.json)
+   const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json';
 
-// GitHub Token (必须勾选 repo 权限)
-const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+   // GitHub Token (必须勾选 repo 权限)
+   const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
-// 登录密码
-const PW = 'your_password';
+   // 登录密码
+   const PW = 'your_password';
 
-// VLESS 订阅 片段 项目域名 (非必选)
-const VU = 'https://your-vless-domain.com';
+   ```
 
-// Shadowsocks 订阅 片段 项目域名 (非必选)
-const SU = 'https://your-ss-domain.com';
-```
+   ```javascript
+   // config-manager 片段 项目域名 (非必选)
+   const MU = 'https://config-manager-domain.com';
+   
+   ```javascript
+   //使用 API 格式，config.json文件可自动生成。
+   const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json';
+
+   ```
+
 
 ---
 
