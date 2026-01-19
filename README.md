@@ -47,7 +47,7 @@
 
 1. 访问 [**GitHub Tokens 设置页**](https://github.com/settings/tokens)
 2. 点击右上角 **Generate new token** -> **Generate new token (classic)**
-3. **Note** (备注): 随便填，例如 `sinppets`
+3. **Note** (备注): 随便填，例如 `sinppets`(有效期按需选择，可以设置不过期)
 4. **Scopes** (权限): ⚠️ **必须勾选 `repo`** (Full control of private repositories)
 5. 点击页面底部 **Generate token**
 6. **复制生成的以 `ghp_` 开头的字符串** (关掉页面就看不到了！)
