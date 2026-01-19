@@ -25,7 +25,7 @@
    
 4. **【可选】Github远程配置，不用可不配置，默认即可，需要配置请按下面 [进阶配置](#进阶配置) 操作**
    
-
+const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
 配置完成后，您的面板地址为：
    ```
    https://您的域名
@@ -60,17 +60,15 @@
 
 > 【注意】您的 GitHub Token (必须勾选 repo 权限)
 
-8. 点击右上角的 **Raw** 按钮
-9. 复制浏览器地址栏中的链接
-   - 格式应为: `https://raw.githubusercontent.com/用户名/仓库名/main/config.json`
-   - 注意：如果链接包含 `?token=...`，请**去掉**问号及后面的所有内容，只保留 `.json` 结尾。
-
-10. **vless.js / shadowsocks.js 片段变量配置**，
-
+8. **vless.js / shadowsocks.js 片段变量配置**，
    
    ```javascript
-   // vless.js / shadowsocks.js (读取配置,使用 raw 格式):
-   const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
+   // GitHub API 配置地址 (读取配置,使用 api 格式):
+   // 严格按这个格式，只要替换你的 用户名 和 仓库名，其他的不要改。
+   const CU = 'https://api.github.com/repos/用户名/仓库名/contents/config.json'; 
+
+   // GitHub Token (必须勾选 repo 权限)
+   const GT = 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
    // config-manager 片段 项目域名
    const MU = 'https://config-manager-domain.com';
