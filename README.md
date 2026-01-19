@@ -25,8 +25,6 @@
    
 4. **【可选】Github远程配置，不用可不配置，默认即可，需要配置请按下面 [进阶配置](#进阶配置) 操作**
    
-const CU = 'https://raw.githubusercontent.com/用户名/仓库名/main/config.json';
-配置完成后，您的面板地址为：
    ```
    https://您的域名
    ```
