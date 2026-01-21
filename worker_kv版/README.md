@@ -26,8 +26,8 @@
 
 #### 步骤二：创建 Worker
 
-1. 进入 `Workers & Pages` → `Create`
-2. 选择 `Create Worker`
+1. 进入 `Workers`
+2. 选择 `hello，word `
 3. 为 Worker 命名（如：`config-manager`）
 4. 点击 `Deploy` 创建
 5. 点击 `Edit code`，将 `config-manager-kv.js` 的内容粘贴进去
