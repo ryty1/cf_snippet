@@ -10,7 +10,7 @@ const PW = 'abc123456';
 let SC = [];
 let DD = [{ domain: 'cf.090227.xyz' }];
 let cC = null, cT = 0;
-const CD = 5 * 60 * 1000;
+const CD = 0;
 function genSocksKey(idx) { const src = T + '-socks-' + idx, chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'; let hash = 0; for (let i = 0; i < src.length; i++) { hash = ((hash << 5) - hash) + src.charCodeAt(i); hash = hash & hash; } let key = ''; for (let i = 0; i < 8; i++) { hash = Math.abs((hash * 1103515245 + 12345) & 0x7fffffff); key += chars[hash % chars.length]; } return key; }
 const E1 = atob('aW52YWxpZCBkYXRh'), E2 = atob('aW52YWxpZCB1c2Vy'), E3 = atob('Y29tbWFuZCBpcyBub3Qgc3VwcG9ydGVk'), E4 = atob('VURQIHByb3h5IG9ubHkgZW5hYmxlIGZvciBETlMgd2hpY2ggaXMgcG9ydCA1Mw=='), E5 = atob('aW52YWxpZCBhZGRyZXNzVHlwZQ=='), E6 = atob('YWRkcmVzc1ZhbHVlIGlzIGVtcHR5'), E7 = atob('d2ViU29ja2V0LmVhZHlTdGF0ZSBpcyBub3Qgb3Blbg=='), E8 = atob('U3RyaW5naWZpZWQgaWRlbnRpZmllciBpcyBpbnZhbGlk'), E9 = atob('SW52YWxpZCBTT0NLUyBhZGRyZXNzIGZvcm1hdA=='), EA = atob('bm8gYWNjZXB0YWJsZSBtZXRob2Rz'), EB = atob('c29ja3Mgc2VydmVyIG5lZWRzIGF1dGg='), EC = atob('ZmFpbCB0byBhdXRoIHNvY2tzIHNlcnZlcg=='), ED = atob('ZmFpbCB0byBvcGVuIHNvY2tzIGNvbm5lY3Rpb24=');
 const A1 = 1, A2 = 2, A3 = 3;
