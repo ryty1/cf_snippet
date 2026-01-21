@@ -131,11 +131,7 @@ const PW = 'abc123456';                             // 密码
 
 ### 访问配置管理
 
-访问 config-manager 时需要带上来源参数：
-- VLESS: `https://your-worker.workers.dev/?from=vless`
-- SS: `https://your-worker.workers.dev/?from=ss`
-
-也可以从 vless-kv 或 shadowsocks-kv 的页面点击「配置」按钮进入。
+从 vless-kv 或 shadowsocks-kv 的页面点击「配置」按钮进入。
 
 ### 管理功能
 
