@@ -6,10 +6,10 @@
 
 | 文件 | 部署方式 | 说明 |注意|
 |------|----------|------|------|
-| `config-manager-kv.js` | Workers | 配置管理中心，需绑定 KV |可共用|
-| `vless-kv.js` | Snippets (free) | VLESS 代理订阅服务 | 
-| `vless-cat.js` | Snippets (高级) | VLESS 代理订阅服务 |仅高级版可用|
-| `shadowsocks-kv.js` | Snippets (free) | Shadowsocks 代理订阅服务 ||
+| [config-manager-kv](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/config-manager-kv.js)| Workers | 配置管理中心，需绑定 KV |可共用|
+| [vless-kv](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/vless-kv.js) | Snippets (free) | VLESS 代理订阅服务 | 
+| [vless-cat](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/vless-cat.js) | Snippets (高级) | VLESS 代理订阅服务 |仅高级版可用|
+| [shadowsocks-kv](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/shadowsocks-kv.js) | Snippets (free) | Shadowsocks 代理订阅服务 ||
 
 ## 🚀 快速部署
 
