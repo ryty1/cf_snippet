@@ -4,11 +4,12 @@
 
 ## 📁 项目结构
 
-| 文件 | 部署方式 | 说明 |
-|------|----------|------|
-| `config-manager-kv.js` | Workers | 配置管理中心，需绑定 KV |
-| `vless-kv.js` | Snippets (片段) | VLESS 代理订阅服务 |
-| `shadowsocks-kv.js` | Snippets (片段) | Shadowsocks 代理订阅服务 |
+| 文件 | 部署方式 | 说明 |注意|
+|------|----------|------|------|
+| `config-manager-kv.js` | Workers | 配置管理中心，需绑定 KV |可共用|
+| `vless-kv.js` | Snippets (free) | VLESS 代理订阅服务 | 
+| `vless-cat.js` | Snippets (高级) | VLESS 代理订阅服务 |仅高级版可用|
+| `shadowsocks-kv.js` | Snippets (片段) | Shadowsocks 代理订阅服务 ||
 
 ## 🚀 快速部署
 
