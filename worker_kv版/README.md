@@ -54,6 +54,7 @@ const PW = 'abc123456';            // 登录密码
 const AS = '24bb-49aa-9c37';       // 调用验证密钥（务必修改）
 const VU = '';                     // vless-kv.js 的部署地址
 const SU = '';                     // shadowsocks-kv.js 的部署地址
+
 ```
 
 ---
@@ -78,9 +79,10 @@ const T = 'e4d59882-dbac-426b-ae64-5abed091b6be';  // UUID (务必修改)
 const FA = 'ProxyIP.cmliussss.net';                 // ProxyIP 地址
 const FP = '443';                                   // ProxyIP 端口
 const CU = '';                                      // config-manager-kv.js 的部署地址
+const SU = '';                                      // 分享链接（完整 URL 含密钥）限高级版snippets可用
 const AS = '24bb-49aa-9c37';                        // 与 config-manager 中的密钥一致
 const SB = '';                                      // clash 订阅后端地址
-const PW = 'abc123456';                             // 密码
+const PW = 'abc123456';                             // 密码(务必修改)
 ```
 
 ---
