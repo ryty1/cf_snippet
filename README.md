@@ -198,6 +198,8 @@ const PW = 'abc123456';                             // 密码
 2. **配置实时生效**：修改配置后立即生效，无需重启
 3. **SOCKS 验证**：每个 SOCKS 节点都有唯一的安全密钥
 4. **Snippets 限制**：Snippets 有一定的代码大小限制（100KB）
-
+5. Clash转换后端**配套定制**[clash-sub-converter](https://github.com/ryty1/clash-sub-converter)项目，Fork本项目，直接 `cloudflare workers / pages` 部署，不用其他任何设置。
+6. 配套 **[汇聚订阅](https://github.com/ryty1/hjdy)** 项目
+   
 ---
 
