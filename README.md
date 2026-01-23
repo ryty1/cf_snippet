@@ -10,8 +10,8 @@
 | 文件 | 部署方式 | 说明 |注意|
 |------|----------|------|------|
 | [config-manager-kv](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/config-manager-kv.js)| Workers | 配置管理中心，需绑定 KV |可共用|
-| [vless-kv](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/vless-kv.js) | Snippets (free) | VLESS 代理订阅服务 | 
-| [vless-cat](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/vless-cat.js) | Snippets (高级) | VLESS 代理订阅服务 |仅高级版可用|
+| [vless-5片段](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/vless-5片段可以.js) | Snippets (free) | VLESS 代理订阅服务 | 
+| [vless-50片段](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/vless-50片段可用.js) | Snippets (高级) | VLESS 代理订阅服务 |仅高级版可用|
 | [shadowsocks-kv](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/shadowsocks-kv.js) | Snippets (free) | Shadowsocks 代理订阅服务 ||
 
 ## 🚀 快速部署
@@ -124,6 +124,7 @@ const PW = 'abc123456';                             // 密码
 
 2. **vless-kv.js** 和 **shadowsocks-kv.js** 中：
    - `CU`：填写 config-manager-kv.js 部署完成后的访问地址
+   - `SU`：填写 分享配置链接（完整 URL 含密钥）
 
 3. **确保 `AS` 密钥一致**：三个文件中的 `AS` 验证密钥必须相同
 
