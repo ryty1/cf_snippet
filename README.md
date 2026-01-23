@@ -3,7 +3,7 @@
 
 # [Cloudflare Workers KV](https://github.com/ryty1/cf_Snippets/tree/main/worker_kv%E7%89%88) 配置管理系统
 
-一套基于 Cloudflare Workers 和 KV 存储配置的 Snippets for VLESS/Shadowsocks 代理配置管理系统。通过 KV 存储实现配置的集中管理和实时同步。
+一套基于 Cloudflare Workers 和 KV 存储配置管理系统， Snippets for VLESS/Shadowsocks 代理脚本。通过 KV 存储实现配置的集中管理和实时同步。
 
 ## 📁 项目结构
 
