@@ -12,7 +12,7 @@
 | [config-manager-kv](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/config-manager-kv.js)| Workers | 配置管理中心，需绑定 KV |可多片段可共用或分享配置|
 | [vless-5片段](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/vless-5片段可以.js) | Snippets (free) | VLESS 订阅服务 | 可分享模式，无socks检测及基础节点
 | [vless-50片段](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/vless-50片段可用.js) | Snippets (高级) | VLESS 订阅服务 |仅高级版可用，socks有效检测，基础节点|
-| [shadowsocks-kv](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/shadowsocks-kv.js) | Snippets (free) | Shadowsocks 订阅服务 ||
+| [shadowsocks](https://github.com/ryty1/cf_Snippets/blob/main/worker_kv%E7%89%88/shadowsocks.js) | Snippets (free) | Shadowsocks 订阅服务 |可分享模式|
 
 ## 🚀 快速部署
 
